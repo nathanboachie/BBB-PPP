@@ -1,0 +1,57 @@
+""""
+*  __       __          --
+* |__)||\/||__) /\ |\/||__)/  \|\/|
+* |__)||  ||__)/--\|  ||__)\__/|  |
+*
+* This file is part of BIMBAMBUM.
+*
+* inputs.py
+*
+* Description: class that contains all the user-defined inputs. Works as an
+* argument parser.
+*
+* -----------------------------------------------------------------------------
+* Copyright (C) 2023 Armand Sieber
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the Free
+* Software Foundation, either version 3 of the License, or (at your option)
+* any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+* more details.
+*
+* You should have received a copy of the GNU General Public License along with
+* this program.  If not, see <http://www.gnu.org/licenses/>.
+* -----------------------------------------------------------------------------
+*
+"""
+
+class simulation_inputs:
+
+    file_name = "free_surface_epsilon500_gamma08_cleaned_up_Nb80_Ns_80_filt8_phi0_01.txt" # Input file name
+
+    dumper_name = "free_surface_gamma08_" # Output file name (no need to provide an extension --> the file will be named as: "dumper_name" + "time_step" + ".txt
+
+    Nb = 80 # Number of elements on the bubble surface (must that of the simulation results saved in "file_name")
+
+    Ns = 80 # Number of elements on the fluid-fluid interface (must that of the simulation results saved in "file_name")
+
+    zeta = 0.0 # buoyancy parameter
+
+    time_step = [538] # Time steps of interest (list) for the computation of the flow field quantities
+                        # N.B. should not be first nor last or second to last time step of computation owing to the temporal derivatives scheme
+
+    h_grid = 0.05 # Distance between adjacent grid points
+
+    s_grid = 0.015 # Shrinking value for the inwards ofsseting of the computational domain
+
+    r_min = 0.0 # Minimium r-coordinate of the computational domain (should be set to 0 because of the axis of symmetry)
+
+    r_max = 3.1 # Maximum r-coordinate of the computational domain
+
+    z_min = -2.1 # Minimium z-coordinate of the computational domain (fluid-fluid interface initially located at z = 0 and bubble initially located at z < 0)
+
+    z_max = 2.0 # Maximum z-coordinate of the computational domain
