@@ -693,6 +693,7 @@ void BIM_solver::write_solution(BubbleData &bubble, BoundaryData &boundary, Inpu
         nodes_position << showpoint << "zeta" << "\t" << data.zeta << "\n";
         nodes_position << showpoint << "Specific heat ratio" << "\t" << data.k << "\n";
         nodes_position << showpoint << "Bubble dynammics" << "\t" << data.bubble_dynamics << "\n";
+        nodes_position << showpoint << "epsilon (for Rayleigh-Plesset bubble)" << "\t" << data.epsilon << "\n";
         nodes_position << showpoint << "Surface elasticity (0 false, 1 true)" << "\t" << data.surface_elasticity << "\n";
         nodes_position << showpoint << "sigma_s" << "\t" << data.sigma_s << "\n";
 

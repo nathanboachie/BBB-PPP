@@ -38,7 +38,7 @@ the simualtion results of the first stage as inputs.
     │   ├── CPP_Code            # c++ source and header files
     │   ├── Python_Code         # python scripts 
     │   └── CMakeLists.txt 
-    ├── License.txt
+    ├── license.md
     └── README.md
     
 ## Dependencies
@@ -62,14 +62,13 @@ The solver relies on the following dependencies.
     * pybind11 (https://github.com/pybind/pybind11; version tested 2.10.4)
 
 
-
-
 ## Building the code
 ### Bubble dynamics
 
 This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interafce bounadries. It may be 
 run as stand-alone and is built as follow:
 ```sh
+$ cd Bubble_Dynamics/
 $ mkdir build
 $ cd build
 $ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> ../
@@ -87,14 +86,15 @@ bubble dynamics at any selected time point in the bubble lifetime. To run this p
 user must first downlaod pybind11 (https://github.com/pybind/pybind11) . This can be done as follow 
 from:
 
-```sh
+```
+$ cd Flow_Field_Quantities
 $ git clone https://github.com/pybind/pybind11.git
 ```
 
 This portion of the code is writtne in Python, yet the performance critical tasks are written in C++ and must
 be compilled. This can be done with the following command sequence conducted in the
 working directory:
-```sh
+```
 $ mkdir build
 $ cd build
 $ cmake ../
@@ -116,6 +116,8 @@ $ make examples
 
 ### Bubble dynamics
 ### Flow field quantities
+
+## Funding
 
 ## License
 

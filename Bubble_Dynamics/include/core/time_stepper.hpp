@@ -158,7 +158,7 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
         dt_b = bubble->time_step_bubble(data.epsilon, data.k);
         dt_s = boundary->time_step_boundary();
         dt = fmin(dt_b, dt_s); // takes minimum between bubble and fluid-fluid interface time step
-        dt = fmax(dt, 0.0001); // impose a minimum time step value to avoid over-filtering
+        dt = fmax(dt, 0.00001); // impose a minimum time step value to avoid over-filtering
         dt = fmin(dt, 0.01); // impose a maximum time step value for stability
         step.dt = dt;
 

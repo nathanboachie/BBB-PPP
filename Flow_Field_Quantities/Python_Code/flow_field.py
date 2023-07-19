@@ -64,9 +64,9 @@ class flow_field:
         # --- Extract relevant data from simulation input file ---
         # --------------------------------------------------------
 
-        # skip_header --> 9 first lines contain information about the simulation properties
+        # skip_header --> 10 first lines contain information about the simulation properties
         # skip_footer --> avoids errors if last result line is incompletely written
-        coordinates = np.genfromtxt(self.file_name, skip_header = 9, skip_footer=1) # all data
+        coordinates = np.genfromtxt(self.file_name, skip_header = 10, skip_footer=1) # all data
 
         # Bubble
         self.r_b = coordinates[:, 2:self.Nb+3] # r-coordinate
