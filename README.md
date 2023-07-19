@@ -64,10 +64,12 @@ The solver relies on the following dependencies.
 
 
 ## Building the software and running the examples
+
 ### Bubble dynamics
 
 This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interface boundaries. It may be 
 run as stand-alone and can be built from the terminal with the following command lines:
+
 ```
 $ cd Bubble_Dynamics/
 $ mkdir build
@@ -116,6 +118,7 @@ of this file contain information regarding key aspects of the simulation. For li
 the time step and the second column the simulation time. Information regarding the other columns are documented in 
  `Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and their access and use are succinctly exemplified 
 in the scripts available in `Bubble_Dynamics/post_processing`.
+
 ### Flow field quantities
 
 This portion of the solver computes the flow field quantities (velocity and pressure) associated with the 
@@ -163,8 +166,11 @@ $ python3 main.py
 
 The results of the simulation are written in a `<dumper_name><time_step>.txt` file.
 This file may be read in the open source post-processing visualization engine `Paraview` (https://www.paraview.org/) with the
-following procedure: 1) open in `Paraview` the file `<time_step>.txt`, 2) apply the `Table To Points` filter and assign the appropriate columns to
-the `X`, `Y` and `Z` coordinates and 3) apply the `Delaunay 2D` filter.
+following procedure: 
+1) open the file `<time_step>.txt` in `Paraview`, 
+2) apply the `Table To Points` filter and assign the appropriate columns to the `X`, `Y` and `Z` coordinates and, 
+3) apply the `Delaunay 2D` filter.
+
 ## Funding
 
 ## License
