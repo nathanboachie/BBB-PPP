@@ -7,15 +7,12 @@
   "//": "",
   "//": "",
   "Bubble data": {
-    "//Nb": 60,
-    "Nb": 60,
-    "//Ns": 60,
+    "Nb": 80,
     "Ns": 60,
     "bubble_dynamics": "Rayleigh_Bubble",
     "zeta": 0.0,
-    "//gamma": 1.0,
-    "gamma": 1.0,
-    "alpha": 1.0,
+    "gamma": 0.95,
+    "alpha": 0.001,
     "epsilon": 100,
     "k": 1.4,
     "surface_elasticity": "false",
@@ -24,10 +21,9 @@
   },
   "Solver parameters": {
     "temporal_solver": "RK2",
-    "dumper_filename": "nodes_position.txt",
-    "delta_phi": "2.0e-2",
-    "//delta_phi": "1.0e-2",
-    "filtering_freq": 2,
-    "n_threads": 2
+    "dumper_filename": "rigid_boundary_Rayleigh.txt",
+    "delta_phi": "1.0e-2",
+    "filtering_freq": 8,
+    "n_threads": 6
   }
 }
