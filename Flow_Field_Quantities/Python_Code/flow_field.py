@@ -56,7 +56,7 @@ class flow_field:
         self.time_step = t_i
         self.h_grid = input_data.h_grid
         self.s_grid = input_data.s_grid
-        self.r_min = input_data.r_min
+        self.r_min = 0.0 # set to 0 since it is defined by the axis of symmetry
         self.r_max = input_data.r_max
         self.z_min = input_data.z_min
         self.z_max = input_data.z_max

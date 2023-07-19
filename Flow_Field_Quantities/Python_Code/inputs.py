@@ -48,8 +48,6 @@ class simulation_inputs:
 
     s_grid = 0.015 # Shrinking value for the inwards ofsseting of the computational domain
 
-    r_min = 0.0 # Minimium r-coordinate of the computational domain (should be set to 0 because of the axis of symmetry)
-
     r_max = 2.1 # Maximum r-coordinate of the computational domain
 
     z_min = -2.1 # Minimium z-coordinate of the computational domain (fluid-fluid interface initially located at z = 0 and bubble initially located at z < 0)

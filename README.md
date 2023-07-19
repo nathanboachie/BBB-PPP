@@ -1,4 +1,4 @@
-# BIMBAMBUM 1.0
+# BIMBAMBUM v1.0
 
 ## BIMBAMBUM
 
@@ -20,23 +20,25 @@ With **BIMBAMBUM** you can solve:
 ## Repository Structure
 
 BIMBAMBUM is a two-stage numerical flow solver. The first stage computes the time evolution of the surfaces of the bubble and 
-nearby boundary. The associated code is available in the 'Bubble_Dynamics' folder. The second stage computes the velocity and pressure 
+nearby boundary. The associated code is available in the `Bubble_Dynamics` folder. The second stage computes the velocity and pressure 
 fields associated with the bubble dynamics at any selected time point in the bubble lifetime. 
-The associated code is available in the 'Flow_Field_Quantities' folder. Both stages of the solver must be executed, built and compiled separately.
-The first stage of the solver may be used independantly while the second stage needs
+The associated code is available in the `Flow_Field_Quantities` folder. Both stages of the solver must be built and executed separately.
+The first stage of the solver may be used independently while the second stage needs
 the simualtion results of the first stage as inputs.
 
-    BIMBAMBUM
+    BIMBAMBUM v1.0
     ├── Bubble_Dynamics         # Bubble and fluid-fluid interface dynamics
     │   ├── src                 # c++ source files
     │   ├── include             # c++ header files 
     │   ├── solver              # main function for solver execution, called at program startup.
     │   ├── config              # example config files
+    │   ├── post_processing     # python scripts for rudimentary post-processing of the simulation
     │   ├── doc                 # doygen folder (compilation optional)
     │   └── CMakeLists.txt 
     ├── Flow_Field_Quantities   # Velocity and pressure fields
     │   ├── CPP_Code            # c++ source and header files
     │   ├── Python_Code         # python scripts 
+    │   ├── Examples            # examples input files
     │   └── CMakeLists.txt 
     ├── license.md
     └── README.md
@@ -46,11 +48,10 @@ the simualtion results of the first stage as inputs.
 The solver relies on the following dependencies.
 
 * c++:
-    * a C++ compiller (tested: Clang 11.0.3 on macOS and )
+    * a C++ compiller with OpenMP support (tested: Clang 11.0.3 on macOS and )
     * a CMake build system (https://cmake.org/, version 3.14 or higher)
     * the Armadillo library for linear algebra (https://arma.sourceforge.net/docs.html; version tested 12.4.0).
     * the GNU scientific library for numerical computing (https://www.gnu.org/software/gsl/; version tested 2.7).
-    * the OpenMP library for multiprocessing (https://www.openmp.org/).
     * the BOOST library for input parsing (https://www.boost.org/; version tested 1.81.0)
 
 * Python:
@@ -62,12 +63,12 @@ The solver relies on the following dependencies.
     * pybind11 (https://github.com/pybind/pybind11; version tested 2.10.4)
 
 
-## Building the code
+## Building the software and running the examples
 ### Bubble dynamics
 
-This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interafce bounadries. It may be 
-run as stand-alone and is built as follow:
-```sh
+This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interface boundaries. It may be 
+run as stand-alone and can be built from the terminal with the following command lines:
+```
 $ cd Bubble_Dynamics/
 $ mkdir build
 $ cd build
@@ -79,21 +80,54 @@ $ make doxydoc       # optional -> write the doxygen documentation
 where `OpenMP option` and `Doxygen option` are either 0 (false) or 1 (true) to enable parallel processing
 and the built of the Doxygen documentation, respectively.
 
+The executable is installed in a `bin` folder alongside a set of `.json` configuration files provided as examples to run
+the simulations. These configurations files contain the input data defining the nature of the simulation. The set of 
+input data is provided in the table below:
+
+| Parameters         | Type    | Short description                                                                  |
+| -------------------| ------- | ---------------------------------------------------------------------------------- |
+| Nb                 | int     | The number of elements for the bubble discretization                               |
+| Ns                 | int     | The number of elements for the fluid-fluid interface discretization              |
+| bubble_dynamics    | string  | The physics governing the bubble (`Rayleigh_Bubble` or `Rayleigh_Plesset_Bubble`)  |
+| zeta               | double  | Buoyancy parameter                                                                 |
+| gamma              | double  | Stand-off distance                                                                 |
+| alpha              | double  | Density ratio of the fluid-fluid interface                                         |
+| epsilon            | double  | Strength parameter                                                                 |
+| k                  | double  | Specific heat ratio                                                                |
+| surface_elasticity | boolean | Whether or not the interface has elasticity (`true` or `false`)                    |
+| sigma_s            | double  | Fluid-fluid interface surface tension                                              |
+| boundary           | string  | Nature of the initial geometry of the boundary (`from_code` must be used in v1.0)  |
+| temporal_solver    | string  | Order of the temporal discretization (`RK1` or `RK2`)                              |
+| dumper_filename    | string  | Name of the dumper file (stores the solution results)                              |
+| delta_phi          | double  | Constant for adaptive time stepping                                                |
+| filtering_freq     | int     | Filtering frequency (i.e. filtering every nth time steps)                          |
+| n_threads          | int     | Number of threads used for parallel processing                                     |
+
+
+The solver may then be run with the following command lines:
+
+```
+$ cd bin/
+$ ./main <name of config file>.json
+```
+
+The results of the simulation are written in a `.txt` file whose name is defined by `dumper_filename`. The 10 first lines 
+of this file contain information regarding key aspects of the simulation. For lines 11 and below, the first column indicates 
+the time step and the second column the simulation time. Information regarding the other columns are documented in 
+ `Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and their access and use are exemplified in the scripts
+ available in `Bubble_Dynamics/post_processing`.
 ### Flow field quantities
 
 This portion of the solver computes the flow field quantities (velocity and pressure) associated with the 
-bubble dynamics at any selected time point in the bubble lifetime. To run this portion of the code, the 
+bubble dynamics at any selected time point in the bubble lifetime. To build this portion of the code, the 
 user must first downlaod pybind11 (https://github.com/pybind/pybind11) . This can be done as follow 
-from:
+from the terminal with the following command lines::
 
 ```
-$ cd Flow_Field_Quantities
+$ cd Flow_Field_Quantities/
 $ git clone https://github.com/pybind/pybind11.git
 ```
-
-This portion of the code is writtne in Python, yet the performance critical tasks are written in C++ and must
-be compilled. This can be done with the following command sequence conducted in the
-working directory:
+Once pybind11 is downloaded, the code may be built with the following command lines:
 ```
 $ mkdir build
 $ cd build
@@ -101,22 +135,36 @@ $ cmake ../
 $ make
 ```
 
-```sh
-$ python main.py
+All files needed to run this portion of the solver are copied in the `build` folder alongside sample 
+results of the first processing stage which are needed as inputs for the second processing stage. The remainder
+of the inputs needed for the simulation may be changed by the user in the `inputs.py` script. The set of 
+input data is provided in the table below: 
+
+| Parameters         | Type         | Short description                                                                               |
+| -------------------| ------------ | ----------------------------------------------------------------------------------------------- |
+| file_name          | string       | Input file name (i.e. results files from first processing stage)                                |
+| dumper_name        | string       | Output file name (no need to provide an extension)                                              |
+| Nb                 | int          | The number of elements for the bubble discretization                                            |
+| Ns                 | int          | The number of elements for the fluid-fluid interface discretization                             |
+| zeta               | double       | Buoyancy parameter                                                                              |
+| time_step          | list of int  | List of the time steps (from the first processing phase) for which the flow fields are computed |
+| h_grid             | double       | Grid spacing                                                                                    |
+| s_grid             | double       | Offsetting constant for shifting the domain boundaries away from the original boundaries        |
+| r_max              | double       | Extend of the computational domain in the r-direction                                           |
+| z_min              | double       | Extend of the computational domain in the z-direction (min) (N.B. the bubble is located at z<0) |
+| z_max              | double       | Extend of the computational domain in the z-direction (max)                                     |
+
+
+An example may then be run with the following command line:  
+
+```
+$ python3 main.py
 ```
 
-## Running the examples
-The example (such as `main.cc`) file can be built with
-```sh
-$ cd build
-$ make examples
-```
-
-## Sample results
-
-### Bubble dynamics
-### Flow field quantities
-
+The results of the simulation are written in a `<dumper_name><time_step>.txt` file.
+This file may be read in the open source post-processing visualization engine `Paraview` with the
+following procedure: 1) open `<time_step>.txt`, 2) apply the `Table To Points` filter and assign the appropriate columns to
+the `X`, `Y` and `Z` coordinates and 3) apply the `Delaunay 2D` filter.
 ## Funding
 
 ## License
