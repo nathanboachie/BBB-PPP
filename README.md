@@ -114,8 +114,8 @@ $ ./main <name of config file>.json
 The results of the simulation are written in a `.txt` file whose name is defined by `dumper_filename`. The 10 first lines 
 of this file contain information regarding key aspects of the simulation. For lines 11 and below, the first column indicates 
 the time step and the second column the simulation time. Information regarding the other columns are documented in 
- `Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and their access and use are exemplified in the scripts
- available in `Bubble_Dynamics/post_processing`.
+ `Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and their access and use are succinctly exemplified 
+in the scripts available in `Bubble_Dynamics/post_processing`.
 ### Flow field quantities
 
 This portion of the solver computes the flow field quantities (velocity and pressure) associated with the 
@@ -162,8 +162,8 @@ $ python3 main.py
 ```
 
 The results of the simulation are written in a `<dumper_name><time_step>.txt` file.
-This file may be read in the open source post-processing visualization engine `Paraview` with the
-following procedure: 1) open `<time_step>.txt`, 2) apply the `Table To Points` filter and assign the appropriate columns to
+This file may be read in the open source post-processing visualization engine `Paraview` (https://www.paraview.org/) with the
+following procedure: 1) open in `Paraview` the file `<time_step>.txt`, 2) apply the `Table To Points` filter and assign the appropriate columns to
 the `X`, `Y` and `Z` coordinates and 3) apply the `Delaunay 2D` filter.
 ## Funding
 
