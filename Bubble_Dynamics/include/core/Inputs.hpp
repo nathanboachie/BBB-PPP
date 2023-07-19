@@ -45,10 +45,10 @@ class Input {
 
         // ---------- Simulation Parameters ----------
         // -------------------------------------------
-        /*! \brief The number of nodes for the bubble discretization. */
+        /*! \brief The number of elements for the bubble discretization. */
         int Nb;
 
-        /*! \brief The number of nodes for the free surface discretization. */
+        /*! \brief The number of elements for the liquid-liquid interface discretization. */
         int Ns;
 
         /*! \brief The physics governing the bubble.

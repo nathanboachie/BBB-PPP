@@ -674,15 +674,15 @@ void BIM_solver::compute_ut(BubbleData &bubble, BoundaryData &boundary, Inputs &
 template<typename BubbleData, typename BoundaryData, typename Inputs>
 void BIM_solver::write_solution(BubbleData &bubble, BoundaryData &boundary, Inputs &data) {
 
-    std::vector<double> data_dump = bubble->r_nodes; // bubble r-coordinate
-    data_dump.insert(data_dump.end(), bubble->z_nodes.begin(), bubble->z_nodes.end()); // bubble z-coordinate
-    data_dump.insert(data_dump.end(), bubble->phi_nodes.begin(), bubble->phi_nodes.end()); // bubble potential
-    data_dump.insert(data_dump.end(), un_b.begin(), un_b.end()); // bubble normal derivative
-    data_dump.insert(data_dump.end(), boundary->r_nodes.begin(), boundary->r_nodes.end()); // interface r-coordinate
-    data_dump.insert(data_dump.end(), boundary->z_nodes.begin(), boundary->z_nodes.end()); // interface z-coordinate
-    data_dump.insert(data_dump.end(), phi1.begin(), phi1.end()); // interface potential (fluid 1)
-    data_dump.insert(data_dump.end(), un_1.begin(), un_1.end()); // interface normal velocity (fluid 1)
-    data_dump.insert(data_dump.end(), boundary->F_nodes.begin(), boundary->F_nodes.end()); // interface F value
+    std::vector<double> data_dump = bubble->r_nodes; // r-coordinate of the nodes on the bubble surface
+    data_dump.insert(data_dump.end(), bubble->z_nodes.begin(), bubble->z_nodes.end()); // z-coordinate of the nodes on the bubble surface
+    data_dump.insert(data_dump.end(), bubble->phi_nodes.begin(), bubble->phi_nodes.end()); // value of the potentials on the bubble surface
+    data_dump.insert(data_dump.end(), un_b.begin(), un_b.end()); // value of the normal velocities on the bubble surface
+    data_dump.insert(data_dump.end(), boundary->r_nodes.begin(), boundary->r_nodes.end()); // r-coordinate of the nodes on the fluid-fluid interface
+    data_dump.insert(data_dump.end(), boundary->z_nodes.begin(), boundary->z_nodes.end()); // z-coordinate of the nodes on the fluid-fluid interface
+    data_dump.insert(data_dump.end(), phi1.begin(), phi1.end()); // value of the potentials on the fluid-fluid interface (fluid 1)
+    data_dump.insert(data_dump.end(), un_1.begin(), un_1.end()); // value of the normal velocities on the fluid-fluid interface (fluid 1)
+    data_dump.insert(data_dump.end(), boundary->F_nodes.begin(), boundary->F_nodes.end()); // value of F on the fluid-fluid interface
     data_dump.insert(data_dump.end(), bubble->V); // bubble volume
 
     if (time_step == 0){
