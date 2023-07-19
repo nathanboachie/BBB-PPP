@@ -24,6 +24,6 @@
     "dumper_filename": "free_surface_Rayleigh_gamma056.txt",
     "delta_phi": "1.0e-2",
     "filtering_freq": 8,
-    "n_threads": 6
+    "n_threads": 1
   }
 }
