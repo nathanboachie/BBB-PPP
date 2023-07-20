@@ -67,6 +67,8 @@ The solver relies on the following dependencies.
 
 ### Bubble dynamics
 
+#### A) Building the software
+
 This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interface boundaries. It may be 
 run as stand-alone and can be built from the terminal with the following command lines:
 
@@ -81,6 +83,8 @@ $ make doxydoc       # optional -> write the doxygen documentation
 ```
 where `OpenMP option` and `Doxygen option` are either 0 (false) or 1 (true) to enable parallel processing
 and the built of the Doxygen documentation, respectively.
+
+#### B) Running an example
 
 The executable is installed in a `bin` folder alongside a set of `.json` configuration files provided as examples to run
 the simulations. These configurations files contain the input data defining the nature of the simulation. The set of 
@@ -113,20 +117,26 @@ $ cd bin/
 $ ./main <name of config file>.json
 ```
 
+#### C) Post-processing the results
+
 The results of the simulation are written in a `.txt` file whose name is defined by `dumper_filename`. The 10 first lines 
 of this file contain information regarding key input parameter of the simulation. For lines 11 and below, the first column 
 indicates the time step and the second column the simulation time. The remainder of the columns store the position of the node
 points of the discretized bubble surface and fluid-fluid interface as well as the values of the normal velocities 
 and the potential values at those points. Further information regarding the structure of this file is documented in 
-`Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`). Their access and use are moreover exemplified 
-in the scripts available in `Bubble_Dynamics/post_processing`.
+`Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and `Bubble_Dynamics/post_processing/quick_output_dispaly.py`. 
+
+Simple post-processing of the simulation results can be done with the `Python` scripts available in `Bubble_Dynamics/post_processing`. 
+These short scripts are provided alongside a sample `.txt` simulation result file and may be run as such. 
 
 ### Flow field quantities
+
+#### A) Building the software
 
 This portion of the solver computes the flow field quantities (velocity and pressure) associated with the 
 bubble dynamics at any selected time point in the bubble lifetime. To build this portion of the code, the 
 user must first downlaod pybind11 (https://github.com/pybind/pybind11) . This can be done as follow 
-from the terminal with the following command lines::
+from the terminal with the following command lines:
 
 ```
 $ cd Flow_Field_Quantities/
@@ -139,6 +149,8 @@ $ cd build
 $ cmake ../
 $ make
 ```
+
+#### B) Running an example
 
 All files needed to run this portion of the solver are copied in the `build` folder alongside sample 
 results of the first processing stage which are needed as inputs for the second processing stage. The remainder
@@ -166,9 +178,15 @@ An example may then be run with the following command line:
 $ python3 main.py
 ```
 
+#### C) Post-processing the results
+
 The results of the simulation are written in a `<dumper_name><time_step>.txt` file.
-This file may be read in the open source post-processing visualization engine `Paraview` (https://www.paraview.org/) with the
-following procedure: 
+
+We provide a simple `Python` script in `Flow_Field_Quantities/post_processing` to display the computed velocity and pressure
+fields. This short script is provided alongside a sample `.txt` simulation result file and may be run as such. 
+
+Alternatively, the `<dumper_name><time_step>.txt` file may also be read in the open source post-processing visualization 
+engine `Paraview` (https://www.paraview.org/) with the following procedure: 
 1) open the file `<dumper_name><time_step>.txt` in `Paraview`, 
 2) apply the `Table To Points` filter and assign the appropriate columns to the `X`, `Y` and `Z` coordinates, 
 3) apply the `Delaunay 2D` filter and,
