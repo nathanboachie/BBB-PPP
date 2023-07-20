@@ -157,19 +157,19 @@ results of the first processing stage which are needed as inputs for the second 
 of the inputs needed for the simulation may be changed by the user in the `inputs.py` script. The set of 
 input data is provided in the table below: 
 
-| Parameters         | Type         | Short description                                                                                                      |
-| -------------------| ------------ | -----------------------------------------------------------------------------------------------------------------------|
-| file_name          | string       | Input file name (i.e. results files from first processing stage)                                                       |
-| dumper_name        | string       | Output file name (no need to provide an extension)                                                                     |
-| Nb                 | int          | The number of elements for the bubble discretization (must be the same as the one written in file_name)                |
-| Ns                 | int          | The number of elements for the fluid-fluid interface discretization (must be the same as the one written in file_name) |
-| zeta               | double       | Buoyancy parameter                                                                                                     |
-| time_step          | list of int  | List of the time steps (from the first processing phase) for which the flow fields are computed                        |
-| h_grid             | double       | Grid spacing                                                                                                           |
-| s_grid             | double       | Offsetting constant for shifting the domain boundaries away from the original boundaries                               |
-| r_max              | double       | Extend of the computational domain in the r-direction                                                                  |
-| z_min              | double       | Extend of the computational domain in the z-direction (min) (N.B. the bubble is located at z<0)                        |
-| z_max              | double       | Extend of the computational domain in the z-direction (max)                                                            |
+| Parameters         | Type         | Short description                                                                                                        |
+| -------------------| ------------ | -------------------------------------------------------------------------------------------------------------------------|
+| file_name          | string       | Input file name (i.e. results files from first processing stage)                                                         |
+| dumper_name        | string       | Output file name (no need to provide an extension)                                                                       |
+| Nb                 | int          | The number of elements for the bubble discretization (must be the same as the one written in `file_name`)                |
+| Ns                 | int          | The number of elements for the fluid-fluid interface discretization (must be the same as the one written in `file_name`) |
+| zeta               | double       | Buoyancy parameter                                                                                                       |
+| time_step          | list of int  | List of the time steps (from the first processing phase) for which the flow fields are computed                          |
+| h_grid             | double       | Grid spacing                                                                                                             |
+| s_grid             | double       | Offsetting constant for shifting the domain boundaries away from the original boundaries                                 |
+| r_max              | double       | Extend of the computational domain in the r-direction                                                                    |
+| z_min              | double       | Extend of the computational domain in the z-direction (min) (N.B. the bubble is located at z<0)                          |
+| z_max              | double       | Extend of the computational domain in the z-direction (max)                                                              |
 
 
 An example may then directly be run with the following command line:  
