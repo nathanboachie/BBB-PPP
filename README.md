@@ -163,7 +163,7 @@ input data is provided in the table below:
 | dumper_name        | string       | Output file name (no need to provide an extension)                                                                       |
 | Nb                 | int          | The number of elements for the bubble discretization (must be the same as the one written in `file_name`)                |
 | Ns                 | int          | The number of elements for the fluid-fluid interface discretization (must be the same as the one written in `file_name`) |
-| zeta               | double       | Buoyancy parameter                                                                                                       |
+| zeta               | double       | Buoyancy parameter (must be the same as the one written in `file_name`)                                                  |
 | time_step          | list of int  | List of the time steps (from the first processing phase) for which the flow fields are computed                          |
 | h_grid             | double       | Grid spacing                                                                                                             |
 | s_grid             | double       | Offsetting constant for shifting the domain boundaries away from the original boundaries                                 |
