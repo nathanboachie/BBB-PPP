@@ -19,8 +19,8 @@ data = np.genfromtxt(file_name, delimiter=',', skip_header=1)
 
 x_fluid = data[:,0] # x-coordinates
 y_fluid = data[:,1] # y-coordinates
-ux_fluid = data[:,3] # velocity x-direction --> not used here, but included for completness
-uy_fluid = data[:,4] # velocity y-direction --> not used here, but included for completness
+ux_fluid = data[:,3] # velocity x-direction --> not used here, but included for completeness
+uy_fluid = data[:,4] # velocity y-direction --> not used here, but included for completeness
 U_fluid = data[:,6] # velocity magnitude
 P_fluid = data[:,7] # pressure
 
