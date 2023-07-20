@@ -1,7 +1,7 @@
 #File:		video_generator.py
 #Date:		19.07.2023
 #Author:	Armand Sieber
-#Tag:		Short script to create an animated view of the bubble and fluid-fluid interface dynamics
+#Tag:		Create an animated view of the bubble and fluid-fluid interface dynamics
 
 
 import numpy as np
