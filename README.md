@@ -124,9 +124,9 @@ of this file contain information regarding key input parameter of the simulation
 indicates the time step and the second column the simulation time. The remainder of the columns store the position of the node
 points of the discretized bubble surface and fluid-fluid interface as well as the values of the normal velocities 
 and the potential values at those points. Further information regarding the structure of this file is documented in 
-`Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and `Bubble_Dynamics/post_processing/quick_output_dispaly.py`. 
+`Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and in `Bubble_Dynamics/post_processing/quick_output_dispaly.py`. 
 
-Simple post-processing of the simulation results can be done with the `Python` scripts available in `Bubble_Dynamics/post_processing`. 
+Simple post-processing of the simulation results can be done with the `Python` scripts available in the folder `Bubble_Dynamics/post_processing`. 
 These short scripts are provided alongside a sample `.txt` simulation result file and may be run as such. 
 
 ### Flow field quantities
@@ -157,22 +157,22 @@ results of the first processing stage which are needed as inputs for the second 
 of the inputs needed for the simulation may be changed by the user in the `inputs.py` script. The set of 
 input data is provided in the table below: 
 
-| Parameters         | Type         | Short description                                                                               |
-| -------------------| ------------ | ----------------------------------------------------------------------------------------------- |
-| file_name          | string       | Input file name (i.e. results files from first processing stage)                                |
-| dumper_name        | string       | Output file name (no need to provide an extension)                                              |
-| Nb                 | int          | The number of elements for the bubble discretization                                            |
-| Ns                 | int          | The number of elements for the fluid-fluid interface discretization                             |
-| zeta               | double       | Buoyancy parameter                                                                              |
-| time_step          | list of int  | List of the time steps (from the first processing phase) for which the flow fields are computed |
-| h_grid             | double       | Grid spacing                                                                                    |
-| s_grid             | double       | Offsetting constant for shifting the domain boundaries away from the original boundaries        |
-| r_max              | double       | Extend of the computational domain in the r-direction                                           |
-| z_min              | double       | Extend of the computational domain in the z-direction (min) (N.B. the bubble is located at z<0) |
-| z_max              | double       | Extend of the computational domain in the z-direction (max)                                     |
+| Parameters         | Type         | Short description                                                                                                      |
+| -------------------| ------------ | -----------------------------------------------------------------------------------------------------------------------|
+| file_name          | string       | Input file name (i.e. results files from first processing stage)                                                       |
+| dumper_name        | string       | Output file name (no need to provide an extension)                                                                     |
+| Nb                 | int          | The number of elements for the bubble discretization (must be the same as the one written in file_name)                |
+| Ns                 | int          | The number of elements for the fluid-fluid interface discretization (must be the same as the one written in file_name) |
+| zeta               | double       | Buoyancy parameter                                                                                                     |
+| time_step          | list of int  | List of the time steps (from the first processing phase) for which the flow fields are computed                        |
+| h_grid             | double       | Grid spacing                                                                                                           |
+| s_grid             | double       | Offsetting constant for shifting the domain boundaries away from the original boundaries                               |
+| r_max              | double       | Extend of the computational domain in the r-direction                                                                  |
+| z_min              | double       | Extend of the computational domain in the z-direction (min) (N.B. the bubble is located at z<0)                        |
+| z_max              | double       | Extend of the computational domain in the z-direction (max)                                                            |
 
 
-An example may then be run with the following command line:  
+An example may then directly be run with the following command line:  
 
 ```
 $ python3 main.py
