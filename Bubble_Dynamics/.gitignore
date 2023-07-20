@@ -73,6 +73,3 @@ Makefile
 # Doxygen
 html/
 latex/
-
-# simulation outputs
-post_processing/*.txt

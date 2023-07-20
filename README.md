@@ -48,11 +48,11 @@ the simualtion results of the first stage as inputs.
 The solver relies on the following dependencies.
 
 * c++:
-    * a C++ compiller with OpenMP support (tested: Clang 11.0.3 on macOS and )
+    * a C++ compiller with OpenMP support (tested: Clang 11.0.3 on macOS and GCC 11.3 on Linux Ubuntu)
     * a CMake build system (https://cmake.org/, version 3.14 or higher)
-    * the Armadillo library for linear algebra (https://arma.sourceforge.net/docs.html; version tested 12.4.0).
+    * the Armadillo library for linear algebra (https://arma.sourceforge.net/docs.html; version tested 10.8.2 and 12.4.0).
     * the GNU scientific library for numerical computing (https://www.gnu.org/software/gsl/; version tested 2.7).
-    * the BOOST library for input parsing (https://www.boost.org/; version tested 1.81.0)
+    * the BOOST library for input parsing (https://www.boost.org/; version tested 1.74.0 and 1.81.0)
 
 * Python:
     * Python (version tested 3.11.3)
@@ -75,7 +75,7 @@ $ cd Bubble_Dynamics/
 $ mkdir build
 $ cd build
 $ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> ../
-$ make install       # optional -> install the solver as a library
+$ make install       # optional -> install the solver as a library (note that special permission may be needed for installation)
 $ make solver
 $ make doxydoc       # optional -> write the doxygen documentation
 ```
@@ -114,9 +114,11 @@ $ ./main <name of config file>.json
 ```
 
 The results of the simulation are written in a `.txt` file whose name is defined by `dumper_filename`. The 10 first lines 
-of this file contain information regarding key aspects of the simulation. For lines 11 and below, the first column indicates 
-the time step and the second column the simulation time. Information regarding the other columns are documented in 
- `Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`) and their access and use are succinctly exemplified 
+of this file contain information regarding key input parameter of the simulation. For lines 11 and below, the first column 
+indicates the time step and the second column the simulation time. The remainder of the columns store the position of the node
+points of the discretized bubble surface and fluid-fluid interface as well as the values of the normal velocities 
+and the potential values at those points. Further information regarding the structure of this file is documented in 
+`Bubble_Dynamics/include/BIM_solver.hpp` (in the method `write_solution`). Their access and use are moreover exemplified 
 in the scripts available in `Bubble_Dynamics/post_processing`.
 
 ### Flow field quantities

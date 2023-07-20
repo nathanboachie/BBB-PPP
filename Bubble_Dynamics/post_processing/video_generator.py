@@ -1,8 +1,7 @@
 #File:		video_generator.py
 #Date:		19.07.2023
 #Author:	Armand Sieber
-#Tag:		Short script to visualize simualtion output of bubble dynamics
-#Copyright:	2023 EPFL. All rights reserved.
+#Tag:		Short script to create an animated view of the bubble and fluid-fluid interface dynamics
 
 
 import numpy as np
@@ -19,8 +18,8 @@ def find_nearest(array, value):
 # -----------------------------
 
 # Must be provided by user
-file_name = 'rigid_boundary_Rayleigh.txt' # simulation output filename
-gamma = 0.95 # stand-off distance
+file_name = 'free_surface_Rayleigh_gamma075.txt' # simulation output filename
+gamma = 0.75 # stand-off distance
 Nb = 80 # number of elements on bubble surface
 Ns = 60 # number of elements on fluid-fluid interface
 
@@ -77,10 +76,10 @@ for i in range(iterations):
     fig = plt.figure(1)
 
     # Region of interest
-    ymin = - gamma - 1.0
-    ymax = - gamma + 1.0
-    xmin = -1.0
-    xmax = 1.0
+    ymin = - gamma - 1.2
+    ymax = - gamma + 2.8
+    xmin = -2.0
+    xmax = 2.0
 
     plt.clf()
     plt.axis('equal')

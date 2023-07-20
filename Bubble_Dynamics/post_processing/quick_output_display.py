@@ -1,9 +1,40 @@
 #File:		video_generator.py
 #Date:		19.07.2023
 #Author:	Armand Sieber
-#Tag:		Short script to visualize simualtion output of bubble dynamics
-#Copyright:	2023 EPFL. All rights reserved.
+#Tag:		Short script to post-process key elements of the bubble dynamics
 
+"""
+This script is an example on how to read and use the the simulation results file
+of the first processing stage of BIMBAMBUM v1.0.
+
+The simulation results file is a '<file_name>.txt' file in which the 10 first lines contain key
+information about the simulation parameters (spatial and temporal discretization, bubble properties, ...).
+The remainder of the lines store quantities computed at the grid points on the bubble surface and on the
+fluid-fluid interface. These may be accessed as follow:
+
+    data = np.genfromtxt(file_name, skip_header = 10, skip_footer=1) # reads simulation file skipping the 10 first lines
+
+    time_step = data[:, 0] # time steps id
+    time = data[:, 1] # simulation time
+
+    r_b = data[:, 2 : Nb + 3] # r-coordinate of the nodes on the bubble surface
+    z_b = data[:, Nb + 3 : 2 * Nb + 4] # z-coordinate of the nodes on the bubble surface
+    phi_b = data[:, 2 * Nb + 4 : 3 * Nb + 5] # value of the potentials on the bubble surface
+    un_b = data[:, 3 * Nb + 5 : 4 * Nb + 6] # value of the normal velocities on the bubble surface
+
+    r_s = data[:, 4 * Nb + 6 : 4 * Nb + 6 + Ns + 1] # r-coordinate of the nodes on the fluid-fluid interface
+    z_s = data[:, 4 * Nb + 6 + Ns + 1 : 4 * Nb + 6 + 2 * Ns + 2] # z-coordinate of the nodes on the fluid-fluid interface
+    phi_s = data[:, 4 * Nb + 6 + 2 * Ns + 2 : 4 * Nb + 6 + 3 * Ns + 3] # value of the potentials on the fluid-fluid interface (fluid 1)
+    un_s = data[:, 4 * Nb + 6 + 3 * Ns + 3 : 4 * Nb + 6 + 4 * Ns + 4] # value of the normal velocities on the fluid-fluid interface (fluid 1)
+    F_s = data[:, 4 * Nb + 6 + 4 * Ns + 4 : 4 * Nb + 6 + 5 * Ns + 5] # value of F on the fluid-fluid interface
+
+    volume = data[:, -1] # bubble volume
+
+where Nb is the number of elements used for the bubble discretization and number of elements for the fluid-fluid interface discretization.
+
+The script below display the bubble and fluid-fluid interface shape at a time step of interest, as well as the temporal
+evolution of the bubble volume and equivalent radius.
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,9 +44,9 @@ import matplotlib.pyplot as plt
 # -----------------------------
 
 # Must be provided by user
-file_name = 'unbounded_Rayleigh_Plesset_epsilon100.txt' # simulation output filename
-gamma = 0.56 # stand-off distance
-Nb = 40 # number of elements on bubble surface
+file_name = 'free_surface_Rayleigh_gamma075.txt' # simulation output filename
+gamma = 0.75 # stand-off distance
+Nb = 80 # number of elements on bubble surface
 Ns = 60 # number of elements on fluid-fluid interface
 time_step = -1 # time step of interest
 
@@ -76,8 +107,8 @@ rs_tot = np.concatenate((rs, -rs_flip))
 zs_tot = np.concatenate((zs, zs_flip))
 
 # Region of interest
-ymin = - gamma - 2.0
-ymax = - gamma + 2.0
+ymin = - gamma - 1.2
+ymax = - gamma + 2.8
 xmin = -2.0
 xmax = 2.0
 
