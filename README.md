@@ -169,9 +169,10 @@ $ python3 main.py
 The results of the simulation are written in a `<dumper_name><time_step>.txt` file.
 This file may be read in the open source post-processing visualization engine `Paraview` (https://www.paraview.org/) with the
 following procedure: 
-1) open the file `<dumper_name><time_step>.txt.txt` in `Paraview`, 
-2) apply the `Table To Points` filter and assign the appropriate columns to the `X`, `Y` and `Z` coordinates and, 
-3) apply the `Delaunay 2D` filter.
+1) open the file `<dumper_name><time_step>.txt` in `Paraview`, 
+2) apply the `Table To Points` filter and assign the appropriate columns to the `X`, `Y` and `Z` coordinates, 
+3) apply the `Delaunay 2D` filter and,
+4) select the flow field quantity to be displayed.
 
 ## Funding
 
