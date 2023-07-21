@@ -91,51 +91,57 @@ public:
 
 
     //Input data;
-    int Nb;
-    std::vector<double> r_nodes;
-    std::vector<double> z_nodes;
-    std::vector<double> ur_nodes;
-    std::vector<double> uz_nodes;
-    std::vector<double> u_nodes;
-    std::vector<double> phi_nodes;
+    int Nb; /*!< \brief The number of elements for the bubble surface discretization.  */
+    std::vector<double> r_nodes; /*!< \brief r-coordinate of the nodes on the bubble surface.*/
+    std::vector<double> z_nodes; /*!< \brief z-coordinate of the nodes on the bubble surface.*/
+    std::vector<double> ur_nodes; /*!< \brief r-component of the velocity of the bubble surface nodes.*/
+    std::vector<double> uz_nodes; /*!< \brief z-component of the velocity of the bubble surface nodes.*/
+    std::vector<double> u_nodes; /*!< \brief Velocity magnitude of the bubble surface nodes.*/
+    std::vector<double> phi_nodes; /*!< \brief Potential values at the bubble surface nodes.*/
 
     // Time integration supplement storage
-    std::vector<double> r_nodes1;
-    std::vector<double> z_nodes1;
-    std::vector<double> phi_nodes1;
-    std::vector<double> dr1;
-    std::vector<double> dz1;
-    std::vector<double> dphi1;
-    std::vector<double> dr2;
-    std::vector<double> dz2;
-    std::vector<double> dphi2;
+    std::vector<double> r_nodes1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> z_nodes1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> phi_nodes1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dr1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dz1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dphi1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dr2; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dz2; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dphi2; /*!< \brief Additional vector for storage.*/
 
 
     // Bubble properties
-    double R0;
-    double V0;
-    double V;
-    double zeta;
-    double gamma;
-    double epsilon;
-    double k;
+    double R0; /*!< \brief Initial bubble radius.*/
+    double V0; /*!< \brief Initial bubble volume.*/
+    double V; /*!< \brief Current bubble volume.*/
+    double zeta; /*!< \brief Buoyancy parameter.*/
+    double gamma; /*!< \brief Stand-off disatnce.*/
+    double epsilon; /*!< \brief Strength parameter.*/
+    double k; /*!< \brief Specific heat ratio.*/
 
     // Simulation case properties
-    std::string bubble_dynamics;
-    double delta_phi;
-    double t0;
+    std::string bubble_dynamics; /*!< \brief Physics governing the bubble behaviour (Rayleigh or Rayleigh-Plesset).*/
+    double delta_phi; /*!< \brief Constant for adaptive time stepping.*/
+    double t0; /*!< \brief Initial simulation time.*/
 
+    /*! \brief Initializes the node points on the bubble surface.*/
     virtual void initialize() = 0;
 
-    void filter_bubble(); // filters bubble surface
+    /*! \brief Filters the bubble surface. */
+    void filter_bubble();
 
-    void remesh_bubble(); // re-grid bubble surface
+    /*! \brief Redistributes the node points position along the bubble surface. */
+    void remesh_bubble();
 
-    double compute_volume(); // compute bubble volume
+    /*! \brief Computes the bubble volume. */
+    double compute_volume();
 
-    int intersect(); //check for bubble intersection
+    /*! \brief Checks the bubble intersection (transition form singly-connected problem to doubly connected problem --> end of simulation). */
+    int intersect();
 
-    double time_step_bubble(double epsilon, double k); // compute time step based on bubble's dynamics
+    /*! \brief Computes the time step value based on the bubble's dynamics*/
+    double time_step_bubble(double epsilon, double k);
 
 };
 

@@ -47,6 +47,7 @@ public:
 
     virtual ~Case_RayleighPlessetBubble() {}
 
+    /*! \brief Initializes the node points on the bubble surface.*/
     void initialize() override;
 
 };

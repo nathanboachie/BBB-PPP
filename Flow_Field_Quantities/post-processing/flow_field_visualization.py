@@ -28,7 +28,7 @@ P_fluid = data[:,7] # pressure
 Nx_domain = round(abs((np.max(x_fluid) - np.min(x_fluid))/(x_fluid[1] - x_fluid[0])) + 1)
 Ny_domain = round(abs((np.max(y_fluid) - np.min(y_fluid))/(y_fluid[0]- y_fluid[Nx_domain])) + 1)
 
-# Reshape solution vectors for comaptibility with python "contourf" plots
+# Reshape solution vectors for compatibility with python "contourf" plots
 x_domain = np.reshape(x_fluid, (Ny_domain, Nx_domain))
 y_domain = np.reshape(y_fluid, (Ny_domain, Nx_domain))
 velocity_field = np.reshape(U_fluid, (Ny_domain, Nx_domain))

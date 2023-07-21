@@ -48,14 +48,19 @@ public:
 
     virtual ~Case_FlatBoundary() {}
 
+    /*! \brief Initializes fluid-fluid interface node points.*/
     void initialize() override;
 
+    /*! \brief Redistributes the node points position along fluid-fluid interface. */
     void remesh_boundary() override;
 
+    /*! \brief Filters the fluid-fluid interface. */
     void filter_boundary() override;
 
+    /*! \brief Estimates the derivatives at the endpoints on the fluid-fluid interface. */
     void boundary_curvature() override;
 
+    /*! \brief Computes the time step value based on the fluid-fluid interface dynamics*/
     void boundary_endpoints_derivatives() override;
 
 };

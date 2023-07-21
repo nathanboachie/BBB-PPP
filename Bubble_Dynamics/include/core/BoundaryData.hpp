@@ -76,58 +76,64 @@ public:
 
 
     //Input data;
-    int Ns;
-    double delta_phi;
+    int Ns; /*!< \brief The number of elements for the liquid-liquid interface discretization.  */
+    double delta_phi; /*!< \brief Constant for adaptive time stepping.*/
 
     // Bubble and interface properties
-    double R0;
-    double gamma;
-    double alpha;
+    double R0; /*!< \brief Initial bubble radius.*/
+    double gamma; /*!< \brief stand-off distance.*/
+    double alpha; /*!< \brief Density ratio.*/
 
     // Solution vectors
-    std::vector<double> r_nodes;
-    std::vector<double> z_nodes;
-    std::vector<double> ur_nodes;
-    std::vector<double> uz_nodes;
-    std::vector<double> u_nodes1;
-    std::vector<double> u_nodes2;
-    std::vector<double> u_vec_prod;
-    std::vector<double> F_nodes;
-    std::vector<double> curv_nodes;
+    std::vector<double> r_nodes; /*!< \brief r-coordinate of the nodes on the fluid-fluid interface.*/
+    std::vector<double> z_nodes; /*!< \brief z-coordinate of the nodes on the fluid-fluid interface.*/
+    std::vector<double> ur_nodes; /*!< \brief r-component of the velocity of the fluid-fluid interface nodes.*/
+    std::vector<double> uz_nodes; /*!< \brief z-component of the velocity of the fluid-fluid interface nodes.*/
+    std::vector<double> u_nodes1; /*!< \brief Velocity magnitude of the fluid-fluid interface nodes (fluid 1).*/
+    std::vector<double> u_nodes2; /*!< \brief Velocity magnitude of the fluid-fluid interface nodes (fluid 2).*/
+    std::vector<double> u_vec_prod; /*!< \brief Dot product of the velocity vectors on each side of the fluid-fluid interface.*/
+    std::vector<double> F_nodes; /*!< \brief Potential difference across the fluid-fluid interface.*/
+    std::vector<double> curv_nodes; /*!< \brief Curvature on the fluid-fluid interface.*/
 
     // Endpoints derivatives (for cubic spline interpolation)
-    double drds1;
-    double drds2;
-    double dzds1;
-    double dzds2;
+    double drds1; /*!< \brief Endpoint derivative (the extremum of the domain): dr/ds .*/
+    double drds2; /*!< \brief Endpoint derivative (at the axis of symmetry): dr/ds.*/
+    double dzds1; /*!< \brief Endpoint derivative (the extremum of the domain): dz/ds.*/
+    double dzds2; /*!< \brief Endpoint derivative (at the axis of symmetry): dz/ds.*/
 
-    double dphi1ds1;
-    double dphi1ds2;
-    double dphi2ds1;
-    double dphi2ds2;
+    double dphi1ds1; /*!< \brief Endpoint derivative (the extremum of the domain): dph1/ds.*/
+    double dphi1ds2; /*!< \brief Endpoint derivative (at the axis of symmetry): dph1/ds.*/
+    double dphi2ds1; /*!< \brief Endpoint derivative (the extremum of the domain): dph2/ds.*/
+    double dphi2ds2; /*!< \brief Endpoint derivative (at the axis of symmetry): dph2/ds.*/
 
     // Time integration supplement storage
-    std::vector<double> r_nodes1;
-    std::vector<double> z_nodes1;
-    std::vector<double> F_nodes1;
-    std::vector<double> dr1;
-    std::vector<double> dz1;
-    std::vector<double> dF1;
-    std::vector<double> dr2;
-    std::vector<double> dz2;
-    std::vector<double> dF2;
+    std::vector<double> r_nodes1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> z_nodes1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> F_nodes1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dr1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dz1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dF1; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dr2; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dz2; /*!< \brief Additional vector for storage.*/
+    std::vector<double> dF2; /*!< \brief Additional vector for storage.*/
 
-    virtual void initialize() = 0; // initialize fluid-fluid interface node points
+    /*! \brief Initializes fluid-fluid interface node points.*/
+    virtual void initialize() = 0;
 
-    virtual void remesh_boundary() = 0; // re-grid bubble fluid-fluid interface
+    /*! \brief Redistributes the node points position along fluid-fluid interface. */
+    virtual void remesh_boundary() = 0;
 
-    virtual void filter_boundary() = 0; // filters fluid-fluid interface
+    /*! \brief Filters the fluid-fluid interface. */
+    virtual void filter_boundary() = 0;
 
-    virtual void boundary_endpoints_derivatives() = 0; // estimates the derivatives at the endpoints on the fluid-fluid interface
+    /*! \brief Estimates the derivatives at the endpoints on the fluid-fluid interface. */
+    virtual void boundary_endpoints_derivatives() = 0;
 
-    virtual void boundary_curvature() = 0; // computes the curvature on the fluid-fluid interface
+    /*! \brief Computes the curvature on the fluid-fluid interface. */
+    virtual void boundary_curvature() = 0;
 
-    double time_step_boundary(); // compute time step based on fluid-fluid interface dynamics
+    /*! \brief Computes the time step value based on the fluid-fluid interface dynamics*/
+    double time_step_boundary();
 
 };
 

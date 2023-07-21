@@ -56,6 +56,7 @@ public:
 
     virtual ~Case_RayleighBubble() {}
 
+    /*! \brief Initializes the node points on the bubble surface.*/
     void initialize() override;
 
 };

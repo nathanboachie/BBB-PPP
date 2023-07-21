@@ -40,7 +40,7 @@
 using namespace std;
 using namespace arma;
 
-/*! \brief Initialize the position of the bubble nodes  */
+/*! Initialize the position of the bubble nodes and the value of the potentials at those nodes based on the Rayleigh-Plesset model.*/
 void Case_RayleighPlessetBubble::initialize() {
 
     const double pi = 3.14159265358979323846264338328;

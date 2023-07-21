@@ -31,20 +31,20 @@
 
 class simulation_inputs:
 
-    file_name = "rigid_boundary_Rayleigh_gamma095.txt" # Input file name
+    file_name = "rigid_boundary_Rayleigh_gamma095.txt" # Input file name (results of first processing phase)
 
     dumper_name = "rigid_boundary_gamma095_" # Output file name (no need to provide an extension --> the file will be named as: "dumper_name" + "time_step" + ".txt
 
-    Nb = 80 # Number of elements on the bubble surface (must that of the simulation results saved in "file_name")
+    Nb = 80 # Number of elements on the bubble surface (must be that of the simulation results saved in "file_name")
 
-    Ns = 60 # Number of elements on the fluid-fluid interface (must that of the simulation results saved in "file_name")
+    Ns = 60 # Number of elements on the fluid-fluid interface (must be that of the simulation results saved in "file_name")
 
-    zeta = 0.0 # buoyancy parameter
+    zeta = 0.0 # buoyancy parameter (must be that of the simulation results saved in "file_name")
 
     time_step = [850] # Time steps of interest (can be a list) for the computation of the flow field quantities
     # N.B. cannot be first nor last or second to last time step of computation owing to the temporal derivatives scheme
 
-    h_grid = 0.025 # Distance between adjacent grid points
+    h_grid = 0.02 # Distance between adjacent grid points
 
     s_grid = 0.015 # Shrinking value for the inwards ofsseting of the computational domain
 

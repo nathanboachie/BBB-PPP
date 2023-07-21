@@ -273,7 +273,7 @@ void Case_FlatBoundary::boundary_curvature() {
     }
 }
 
-/*! Computation of the derivatives at the endpoints of fluid-fluid interface curvature.
+/*! Computation of the derivatives at the endpoints of fluid-fluid interface.
     Needed for the evaluation of the cubic splines clamped-end conditions.
 
     The derivatives are known at the axis of symmetry (indicated with 2): dr/ds2 = -1,

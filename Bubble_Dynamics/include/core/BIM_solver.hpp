@@ -70,27 +70,29 @@ public:
     }
 
     // Vectors for bubble and fluid-fluid interface dynamics
-    std::vector<double> un_b;
-    std::vector<double> un_1;
-    std::vector<double> un_2;
-    std::vector<double> phi1;
-    std::vector<double> phi2;
+    std::vector<double> un_b; /*!< \brief Normal velocity on bubble surface */
+    std::vector<double> un_1; /*!< \brief Normal velocity on fluid-fluid interface (fluid 1) */
+    std::vector<double> un_2; /*!< \brief Normal velocity on fluid-fluid interface (fluid 2) */
+    std::vector<double> phi1; /*!< \brief Potential on fluid-fluid interface (fluid 1) */
+    std::vector<double> phi2; /*!<  brief Potential on fluid-fluid interface (fluid 2) */
 
     // Simulation parameters
-    double dt;
-    double time;
-    int time_step;
+    double dt; /*!< \brief Time step value */
+    double time; /*!< \brief Simulation time */
+    int time_step; /*!< \brief Time step index */
 
-    std::ofstream nodes_position;
+    std::ofstream nodes_position; /*!<\brief  Output stream to be written in dumper file */
 
     // Functions
-
+    /*! \brief Computes the normal velocities on the boundaries using the boundary integral formulation of Laplace equation */
     template<typename BubbleData, typename BoundaryData, typename Inputs>
     void compute_un(BubbleData &bubble, BoundaryData &boundary, Inputs &data); //compute nodes normal velocities
 
+    /*! \brief Computes the tangential velocities from the potentials on the boundaries and their position*/
     template<typename BubbleData, typename BoundaryData, typename Inputs>
     void compute_ut(BubbleData &bubble, BoundaryData &boundary, Inputs &data); //compute nodes tangential velocities
 
+    /*! \brief Write solution to dumper file*/
     template<typename BubbleData, typename BoundaryData, typename Inputs>
     void write_solution(BubbleData &bubble, BoundaryData &boundary, Inputs &data); // write solution
 
@@ -99,7 +101,7 @@ public:
 using namespace std;
 using namespace arma;
 
-/*! \brief Computes the normal velocities on the boundaries using the boundary integral formulation of Laplace equation */
+
 template<typename BubbleData, typename BoundaryData, typename Inputs>
 void BIM_solver::compute_un(BubbleData &bubble, BoundaryData &boundary, Inputs &data) {
 
@@ -514,7 +516,7 @@ void BIM_solver::compute_un(BubbleData &bubble, BoundaryData &boundary, Inputs &
 
 }
 
-/*! \brief Computes the tangential velocities from the potentials on the boundaries and their position*/
+
 template<typename BubbleData, typename BoundaryData, typename Inputs>
 void BIM_solver::compute_ut(BubbleData &bubble, BoundaryData &boundary, Inputs &data) {
 
@@ -670,7 +672,6 @@ void BIM_solver::compute_ut(BubbleData &bubble, BoundaryData &boundary, Inputs &
 
 }
 
-/*! \brief Write solution to dumper file*/
 template<typename BubbleData, typename BoundaryData, typename Inputs>
 void BIM_solver::write_solution(BubbleData &bubble, BoundaryData &boundary, Inputs &data) {
 

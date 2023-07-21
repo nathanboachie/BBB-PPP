@@ -38,12 +38,12 @@ FILE (GLOB HEADERS_CORE ${PROJECT_SOURCE_DIR}/include/core/*.hpp)
 
 FILE (GLOB SOURCES_EXAMPLES ${CMAKE_CURRENT_SOURCE_DIR}/solver/*.cpp)
 SET (EXAMPLES_CONFIG_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/config/inputs_Rayleigh_free_surface_gamma056.json
-    ${CMAKE_CURRENT_SOURCE_DIR}/config/inputs_Rayleigh_free_surface_gamma075.json
-    ${CMAKE_CURRENT_SOURCE_DIR}/config/inputs_Rayleigh_Plesset_unbounded_epsilon100.json
-    ${CMAKE_CURRENT_SOURCE_DIR}/config/inputs_Rayleigh_Plesset_unbounded_epsilon1000.json
-    ${CMAKE_CURRENT_SOURCE_DIR}/config/inputs_Rayleigh_rigid_boundary.json
-    ${CMAKE_CURRENT_SOURCE_DIR}/config/inputs_Rayleigh_unbounded.json)
+    ${CMAKE_CURRENT_SOURCE_DIR}/config_examples/inputs_Rayleigh_free_surface_gamma056.json
+    ${CMAKE_CURRENT_SOURCE_DIR}/config_examples/inputs_Rayleigh_free_surface_gamma075.json
+    ${CMAKE_CURRENT_SOURCE_DIR}/config_examples/inputs_Rayleigh_Plesset_unbounded_epsilon100.json
+    ${CMAKE_CURRENT_SOURCE_DIR}/config_examples/inputs_Rayleigh_Plesset_unbounded_epsilon1000.json
+    ${CMAKE_CURRENT_SOURCE_DIR}/config_examples/inputs_Rayleigh_rigid_boundary.json
+    ${CMAKE_CURRENT_SOURCE_DIR}/config_examples/inputs_Rayleigh_unbounded.json)
 
 # -- Find libraries --
 #
