@@ -37,7 +37,7 @@ the simualtion results of the first stage as inputs.
     │   └── CMakeLists.txt 
     ├── Flow_Field_Quantities   # compuation of the velocity and pressure fields
     │   ├── solver_codes        # software scripts (c++ and Python)
-    │   ├── simulation_examples # simualtions examples of first stage (needed as inputs in second stage)
+    │   ├── simulation_examples # simualtion result examples of first stage (needed as inputs in second stage)
     │   ├── post_processing     # python scripts for rudimentary post-processing of the simulation
     │   └── CMakeLists.txt 
     ├── license.md
@@ -149,6 +149,8 @@ $ cd build
 $ cmake ../
 $ make
 ```
+Note that the `source_dir` of the command `add_subdirectory(<source_dir>)` may have to be modified in the `CMakeLists.txt` file 
+to match the name of the directory containing `pybind11`.  
 
 #### B) Running an example
 
