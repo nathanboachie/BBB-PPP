@@ -27,18 +27,18 @@ The first stage of the solver may be used independently while the second stage n
 the simualtion results of the first stage as inputs.
 
     BIMBAMBUM v1.0
-    ├── Bubble_Dynamics         # Bubble and fluid-fluid interface dynamics
-    │   ├── src                 # c++ source files
-    │   ├── include             # c++ header files 
+    ├── Bubble_Dynamics         # compuation of the bubble and fluid-fluid interface dynamics
+    │   ├── src                 # software c++ source files
+    │   ├── include             # software c++ header files 
     │   ├── solver              # main function for solver execution, called at program startup.
-    │   ├── config              # example config files
+    │   ├── config_examples     # examples configuration files (software inputs)
     │   ├── post_processing     # python scripts for rudimentary post-processing of the simulation
-    │   ├── doc                 # doygen folder (compilation optional)
+    │   ├── doc                 # doxygen folder (compilation optional)
     │   └── CMakeLists.txt 
-    ├── Flow_Field_Quantities   # Velocity and pressure fields
-    │   ├── CPP_Code            # c++ source and header files
-    │   ├── Python_Code         # python scripts 
-    │   ├── Examples            # examples input files
+    ├── Flow_Field_Quantities   # compuation of the velocity and pressure fields
+    │   ├── solver_codes        # software scripts (c++ and Python)
+    │   ├── simulation_examples # simualtions examples of first stage (needed as inputs in second stage)
+    │   ├── post_processing     # python scripts for rudimentary post-processing of the simulation
     │   └── CMakeLists.txt 
     ├── license.md
     └── README.md
