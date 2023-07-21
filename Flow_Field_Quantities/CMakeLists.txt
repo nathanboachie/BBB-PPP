@@ -5,21 +5,21 @@ project(Flow_Field_Quantities)
 SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 SET (PYTHON_FILES
-		${CMAKE_CURRENT_SOURCE_DIR}/Python_Code/inputs.py
-		${CMAKE_CURRENT_SOURCE_DIR}/Python_Code/main.py
-		${CMAKE_CURRENT_SOURCE_DIR}/Python_Code/flow_field.py
-		${CMAKE_CURRENT_SOURCE_DIR}/Python_Code/create_domain.py
-		${CMAKE_CURRENT_SOURCE_DIR}/Python_Code/classify_domain.py)
+		${CMAKE_CURRENT_SOURCE_DIR}/solver_codes/python/inputs.py
+		${CMAKE_CURRENT_SOURCE_DIR}/solver_codes/python/main.py
+		${CMAKE_CURRENT_SOURCE_DIR}/solver_codes/python/flow_field.py
+		${CMAKE_CURRENT_SOURCE_DIR}/solver_codes/python/create_domain.py
+		${CMAKE_CURRENT_SOURCE_DIR}/solver_codes/python/classify_domain.py)
 
 SET (EXAMPLE_FILES
-		${CMAKE_CURRENT_SOURCE_DIR}/Examples/rigid_boundary_Rayleigh_gamma095.txt
-		${CMAKE_CURRENT_SOURCE_DIR}/Examples/unbounded_Rayleigh.txt)
+		${CMAKE_CURRENT_SOURCE_DIR}/simulation_examples/rigid_boundary_Rayleigh_gamma095.txt
+		${CMAKE_CURRENT_SOURCE_DIR}/simulation_examples/unbounded_Rayleigh.txt)
 
 add_subdirectory(pybind11)
 
 pybind11_add_module(flow_potential
-			CPP_Code/velocity_potential.cpp
-			CPP_Code/cubic_spline.cpp)
+			solver_codes/cpp/velocity_potential.cpp
+			solver_codes/cpp/cubic_spline.cpp)
 
 
 # -- Find libraries --
