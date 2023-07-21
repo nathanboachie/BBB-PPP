@@ -2,8 +2,8 @@
 
 ## BIMBAMBUM
 
-**BIMBAMBUM** stands for Boundary Integral Method for Bubble Analysis and Modeling 
-in Bounded and Unbounded Media. It is a potential flow solver mainly written in C++ intended at modeling the behaviour 
+**BIMBAMBUM** stands for **B**oundary **I**ntegral **M**ethod for **B**ubble **A**nalysis and **M**odeling 
+in **B**ounded and **U**nbounded **M**edia. It is a potential flow solver mainly written in C++ intended at modeling the behaviour 
  of a single cavitation bubble in the vicinity of an initially flat fluid-fluid interface. The software solves the
  Laplace equation using a boundary integral formulation in axisymmetric coordinates. The code has the vocation to allow 
  research teams, students and any other interested person to quickly get insights into the behaviour of cavitation bubbles
@@ -19,7 +19,7 @@ With **BIMBAMBUM** you can solve:
 
 ## Repository Structure
 
-BIMBAMBUM is a two-stage numerical flow solver. The first stage computes the time evolution of the surfaces of the bubble and 
+**BIMBAMBUM** is a two-stage numerical flow solver. The first stage computes the time evolution of the surfaces of the bubble and 
 nearby boundary. The associated code is available in the `Bubble_Dynamics` folder. The second stage computes the velocity and pressure 
 fields associated with the bubble dynamics at any selected time point in the bubble lifetime. 
 The associated code is available in the `Flow_Field_Quantities` folder. Both stages of the solver must be built and executed separately.
