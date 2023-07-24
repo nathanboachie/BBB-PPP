@@ -322,6 +322,8 @@ class flow_field:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlim((-self.r_max, self.r_max))
+        ax.set_xlabel('r [-]')
+        ax.set_ylabel('z [-]')
 
 
         # Pressure contour plot
@@ -341,18 +343,27 @@ class flow_field:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlim((-self.r_max, self.r_max))
+        ax.set_xlabel('r [-]')
+        ax.set_ylabel('z [-]')
 
         # Velocity 3D scatter plot
         fig3 = plt.figure(3)
         ax = fig3.add_subplot(projection='3d')
         ax.set_title('U [-]')
         ax.scatter(self.x_fluid, self.y_fluid, self.U_fluid)
+        ax.set_xlabel('r [-]')
+        ax.set_ylabel('z [-]')
+        ax.set_zlabel('U [-]')
+
 
         # Pressure 3D scatter plot
         fig4 = plt.figure(4)
         ax = fig4.add_subplot(projection='3d')
         ax.set_title('P [-]')
         ax.scatter(self.x_fluid, self.y_fluid, self.P_fluid)
+        ax.set_xlabel('r [-]')
+        ax.set_ylabel('z [-]')
+        ax.set_zlabel('P [-]')
 
 
         plt.show()
