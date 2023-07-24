@@ -55,7 +55,7 @@ The solver relies on the following dependencies.
     * the BOOST library for input parsing (https://www.boost.org/; version tested 1.74.0 and 1.81.0)
 
 * Python:
-    * Python (version tested 3.11.3)
+    * Python 3 (version tested 3.11.3)
     * Numpy (version tested 1.24.3)
     * Matplotlib (version tested 3.7.1)
     
@@ -70,7 +70,7 @@ The solver relies on the following dependencies.
 #### A) Building the software
 
 This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interface boundaries. It may be 
-run as stand-alone and can be built from the terminal with the following command lines:
+run as stand-alone and can be built from the terminal with the following command lines on Linux systems:
 
 ```
 $ cd Bubble_Dynamics/
@@ -83,6 +83,21 @@ $ make doxydoc       # optional -> write the doxygen documentation
 ```
 where `OpenMP option` and `Doxygen option` are either 0 (false) or 1 (true) to enable parallel processing
 and the built of the Doxygen documentation, respectively.
+
+On macOS systems the following commands should be used:
+
+```
+$ cd Bubble_Dynamics/
+$ mkdir build
+$ cd build
+$ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> -DOPENMP_INCLUDE_DIR=/your/path/to/openmp/include -DOPENMP_LIBRARY=/your/path/to/openmp/lib/libomp.<extension> ../
+$ make install       # optional -> install the solver as a library (note that special permission may be needed for installation)
+$ make solver
+$ make doxydoc       # optional -> write the doxygen documentation
+```
+
+where `<extension>` stands for the library extension (e.g. `<extension>=.dylib`).  Note that if `-DBUILD_OPENMP=0`, there is no need to provide the paths
+OpenMP include directory nor to its library.
 
 #### B) Running an example
 

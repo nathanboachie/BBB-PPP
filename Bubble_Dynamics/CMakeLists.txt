@@ -1,7 +1,7 @@
 # -- Set the project --
 #
 
-CMAKE_MINIMUM_REQUIRED (VERSION 3.24 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.14 FATAL_ERROR)
 IF (POLICY CMP0042)
   # policies not known to CMake 2.8 ...
   CMAKE_POLICY (SET CMP0042 NEW) # Mac OS -rpath behavior
