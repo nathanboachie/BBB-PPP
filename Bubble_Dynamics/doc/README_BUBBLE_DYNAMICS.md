@@ -49,7 +49,7 @@ The solver relies on the following dependencies.
 
 ### Building the software
 
-The software can be built from the terminal with the following command lines:
+The software can be built from the terminal with the following command lines on Linux systems:
 
 ```
 $ cd Bubble_Dynamics/
@@ -62,6 +62,21 @@ $ make doxydoc       # optional -> write the doxygen documentation
 ```
 where `OpenMP option` and `Doxygen option` are either 0 (false) or 1 (true) to enable parallel processing
 and the built of the Doxygen documentation, respectively.
+
+On macOS systems the following commands should be used:
+
+```
+$ cd Bubble_Dynamics/
+$ mkdir build
+$ cd build
+$ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> -DOPENMP_INCLUDE_DIR=/your/path/to/openmp/include -DOPENMP_LIBRARY=/your/path/to/openmp/lib/libomp.<extension> ../
+$ make install       # optional -> install the solver as a library (note that special permission may be needed for installation)
+$ make solver
+$ make doxydoc       # optional -> write the doxygen documentation
+```
+
+where `<extension>` stands for the library extension (e.g. `<extension>=.dylib`).  Note that if `-DBUILD_OPENMP=0`, there is no need to include the
+flags `-DOPENMP_INCLUDE_DIR` and `-DOPENMP_LIBRARY`.
 
 ### Running an example
 

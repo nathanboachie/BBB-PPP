@@ -96,8 +96,8 @@ $ make solver
 $ make doxydoc       # optional -> write the doxygen documentation
 ```
 
-where `<extension>` stands for the library extension (e.g. `<extension>=.dylib`).  Note that if `-DBUILD_OPENMP=0`, there is no need to provide the paths
-OpenMP include directory nor to its library.
+where `<extension>` stands for the library extension (e.g. `<extension>=.dylib`).  Note that if `-DBUILD_OPENMP=0`, there is no need to include the
+flags `-DOPENMP_INCLUDE_DIR` and `-DOPENMP_LIBRARY`.
 
 #### B) Running an example
 
