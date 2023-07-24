@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     for i in range(len(t_steps)):
         t_i = t_steps[i]
-        print(t_i)
+        print('Time step: ', t_i)
         simulation = flow_field.flow_field(t_i)
         simulation.domain_creation()
         simulation.compute_velocities()

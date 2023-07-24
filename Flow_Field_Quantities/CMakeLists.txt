@@ -21,12 +21,18 @@ pybind11_add_module(flow_potential
 			solver_codes/cpp/velocity_potential.cpp
 			solver_codes/cpp/cubic_spline.cpp)
 
-
-# -- Find libraries --
+# -- Check for Python 3 --
 #
 
-# finding armadillo library and include path
-# ------------------------------------------
+FIND_PACKAGE(Python 3 COMPONENTS Interpreter Development REQUIRED)
+IF(Python_FOUND)
+ MESSAGE("-- Python 3 found")
+ELSEIF(NOT Python_FOUND)
+ MESSAGE(FATAL_ERROR "-- Python 3 not found")
+ENDIF()
+
+# -- Find dependencies --
+#
 
 # Armadillo
 FIND_PACKAGE(Armadillo REQUIRED)
@@ -50,8 +56,9 @@ ENDIF()
 
 
 
-# Copy the necessary python files
-# -------------------------------
+# -- Copy the necessary python files --
+# 
+
 FOREACH (PYTHON_SCRIPT ${PYTHON_FILES})
 	GET_FILENAME_COMPONENT (PYTHON_NAME ${PYTHON_SCRIPT} NAME)
 	CONFIGURE_FILE (${PYTHON_SCRIPT}
@@ -59,8 +66,9 @@ FOREACH (PYTHON_SCRIPT ${PYTHON_FILES})
 			COPYONLY)
 ENDFOREACH()
 
-# Copy the necessary example files
-# -------------------------------
+# -- Copy the necessary example files --
+# 
+
 FOREACH (EXAMPLE_INPUTS ${EXAMPLE_FILES})
 	GET_FILENAME_COMPONENT (EXAMPLE_NAME ${EXAMPLE_INPUTS} NAME)
 	CONFIGURE_FILE (${EXAMPLE_INPUTS}

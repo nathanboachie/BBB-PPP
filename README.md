@@ -150,7 +150,7 @@ These short scripts are provided alongside a sample `.txt` simulation result fil
 
 This portion of the solver computes the flow field quantities (velocity and pressure) associated with the 
 bubble dynamics at any selected time point in the bubble lifetime. To build this portion of the code, the 
-user must first downlaod pybind11 (https://github.com/pybind/pybind11) . This can be done as follow 
+user must first download pybind11 (https://github.com/pybind/pybind11) . This can be done as follow 
 from the terminal with the following command lines:
 
 ```
