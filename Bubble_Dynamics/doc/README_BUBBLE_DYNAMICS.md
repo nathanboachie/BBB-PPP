@@ -70,7 +70,7 @@ must fitted with the following additional flags:
 $ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> -DCMAKE_C_COMPILER=/your/path/to/gcc-XX -DCMAKE_CXX_COMPILER=/your/path/to/g++-XX ../
 ```
 
-where `XX` stands for the version of the GCC compiler. Note that `OpenMP` may not be supported on every systems in which case the software
+where `XX` stands for the version of the GCC compiler. Note that `OpenMP` may not be supported on every system in which case the software
 must be run in series, i.e. with  `-DBUILD_OPENMP=0`.
 
 ### Running an example
