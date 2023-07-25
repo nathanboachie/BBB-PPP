@@ -33,7 +33,7 @@ The associated code is available in the `Flow_Field_Quantities` folder. This doc
 The solver relies on the following dependencies.
 
 * c++:
-    * a C++ compiller with OpenMP support (tested: Clang 11.0.3 on macOS and GCC 11.3 on Linux Ubuntu)
+    * a C++ compiller with preferably OpenMP support (tested: GCC 11.3 on Linux Ubuntu and Apple clang 14.0.3 and GCC 13.1.0 on macOS Ventura)
     * a CMake build system (https://cmake.org/, version 3.14 or higher)
     * the Armadillo library for linear algebra (https://arma.sourceforge.net/docs.html; version tested 10.8.2 and 12.4.0).
     * the GNU scientific library for numerical computing (https://www.gnu.org/software/gsl/; version tested 2.7).
@@ -46,10 +46,10 @@ The solver relies on the following dependencies.
     
 ## Building the software and running the examples
 
+#### A) Building the software
 
-### Building the software
-
-The software can be built from the terminal with the following command lines on Linux systems:
+This portion of the solver computes the temporal evolution of the bubble and fluid-fluid interface boundaries. It may be 
+run as stand-alone and can be built from the terminal with the following command lines on Linux systems:
 
 ```
 $ cd Bubble_Dynamics/
@@ -63,20 +63,15 @@ $ make doxydoc       # optional -> write the doxygen documentation
 where `OpenMP option` and `Doxygen option` are either 0 (false) or 1 (true) to enable parallel processing
 and the built of the Doxygen documentation, respectively.
 
-On macOS systems the following commands should be used:
+On macOS systems the same commands lines may be used with an Apple clang or a GCC compiler. In the later case, the `cmake` command 
+must fitted with the following additional flags:
 
 ```
-$ cd Bubble_Dynamics/
-$ mkdir build
-$ cd build
-$ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> -DOPENMP_INCLUDE_DIR=/your/path/to/openmp/include -DOPENMP_LIBRARY=/your/path/to/openmp/lib/libomp.<extension> ../
-$ make install       # optional -> install the solver as a library (note that special permission may be needed for installation)
-$ make solver
-$ make doxydoc       # optional -> write the doxygen documentation
+$ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> -DCMAKE_C_COMPILER=/your/path/to/gcc-XX -DCMAKE_CXX_COMPILER=/your/path/to/g++-XX ../
 ```
 
-where `<extension>` stands for the library extension (e.g. `<extension>=.dylib`).  Note that if `-DBUILD_OPENMP=0`, there is no need to include the
-flags `-DOPENMP_INCLUDE_DIR` and `-DOPENMP_LIBRARY`.
+where `XX` stands for the version of the GCC compiler. Note that `OpenMP` may not be supported on every systems in which case the software
+must be run in series, i.e. with  `-DBUILD_OPENMP=0`.
 
 ### Running an example
 

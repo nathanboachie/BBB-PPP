@@ -48,7 +48,7 @@ the simualtion results of the first stage as inputs.
 The solver relies on the following dependencies.
 
 * c++:
-    * a C++ compiller with OpenMP support (tested: GCC 11.3 on Linux Ubuntu and Apple clang 14.0.3 and GCC 13.1.0 on macOS Ventura)
+    * a C++ compiller with preferably OpenMP support (tested: GCC 11.3 on Linux Ubuntu and Apple clang 14.0.3 and GCC 13.1.0 on macOS Ventura)
     * a CMake build system (https://cmake.org/, version 3.18 or higher)
     * the Armadillo library for linear algebra (https://arma.sourceforge.net/docs.html; version tested 10.8.2 and 12.4.0).
     * the GNU scientific library for numerical computing (https://www.gnu.org/software/gsl/; version tested 2.7).
