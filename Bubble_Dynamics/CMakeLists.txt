@@ -79,7 +79,7 @@ ENDIF()
 
 IF (BUILD_OPENMP)
 
-  IF(UNIX AND NOT APPLE)
+
     FIND_PACKAGE(OpenMP)
     IF(OpenMP_FOUND)
       MESSAGE ("-- OpenMP found")
@@ -87,27 +87,7 @@ IF (BUILD_OPENMP)
     ELSEIF (NOT OpenMP_FOUND)
       MESSAGE (FATAL_ERROR "-- OpenMP not found")
     ENDIF()
-  ELSEIF(APPLE)
-    FIND_PATH (OPENMP_INCLUDE_DIR
-      NAMES omp.h
-      PATHS include ../include)
-    IF (NOT OPENMP_INCLUDE_DIR)
-      MESSAGE (FATAL_ERROR "OpenMP include directories not found")
-    ELSE ()
-      INCLUDE_DIRECTORIES (${OPENMP_INCLUDE_DIR})
-    ENDIF()
-    FIND_LIBRARY (OPENMP_LIBRARY
-      NAMES libomp
-      PATHS  lib ../lib)
-    IF (NOT OPENMP_LIBRARY)
-      MESSAGE (FATAL_ERROR "OpenMP libraries not found")
-    ENDIF()
-    INCLUDE (FindPackageHandleStandardArgs)
-    FIND_PACKAGE_HANDLE_STANDARD_ARGS(OPENMP DEFAULT_MSG
-      OPENMP_INCLUDE_DIR OPENMP_LIBRARY)
-    SET (OPENMP_LIBRARIES ${OPENMP_LIBRARY})
-    SET (OPENMP_INCLUDE_DIRS ${OPENMP_INCLUDE_DIR})
-  ENDIF()
+
   
 ENDIF()
 

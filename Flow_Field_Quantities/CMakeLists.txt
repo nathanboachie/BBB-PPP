@@ -15,7 +15,7 @@ SET (EXAMPLE_FILES
 		${CMAKE_CURRENT_SOURCE_DIR}/simulation_examples/rigid_boundary_Rayleigh_gamma095.txt
 		${CMAKE_CURRENT_SOURCE_DIR}/simulation_examples/unbounded_Rayleigh.txt)
 
-add_subdirectory(pybind11)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pybind11)
 
 pybind11_add_module(flow_potential
 			solver_codes/cpp/velocity_potential.cpp
