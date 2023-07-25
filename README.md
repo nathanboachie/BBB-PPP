@@ -84,14 +84,14 @@ $ make doxydoc       # optional -> write the doxygen documentation
 where `OpenMP option` and `Doxygen option` are either 0 (false) or 1 (true) to enable parallel processing
 and the built of the Doxygen documentation, respectively.
 
-On macOS systems the same commands lines may be used with and Apple clang or a GCC compiler. In the later case, the `cmake` command 
+On macOS systems the same commands lines may be used with an Apple clang or a GCC compiler. In the later case, the `cmake` command 
 must fitted with the following additional flags:
 
 ```
 $ cmake -DBUILD_OPENMP=<OpenMP option> -DBUILD_DOXYGEN=<Doxygen option> -DCMAKE_C_COMPILER=/your/path/to/gcc-XX -DCMAKE_CXX_COMPILER=/your/path/to/g++-XX ../
 ```
 
-where `XX` stands for the version of the GCC compiler. Note may not be supported `OpenMP` on every systems in which case the software
+where `XX` stands for the version of the GCC compiler. Note that `OpenMP` may not be supported on every systems in which case the software
 must be run in series, i.e. with  `-DBUILD_OPENMP=0`.
 
 #### B) Running an example
