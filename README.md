@@ -206,6 +206,8 @@ engine `Paraview` (https://www.paraview.org/) with the following procedure:
 
 ## Funding
 
+We gratefully acknowledge the support of the Swiss National Science Foundation (grants No. 179018 and No. 186158) and the MSCA-ITN-ETN of the European Union's H2020 program (REA grant agreement no. 813766).
+
 ## License
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
