@@ -172,7 +172,7 @@ void BIM_solver::compute_un(BubbleData &bubble, BoundaryData &boundary, Inputs &
 
 #pragma omp parallel num_threads(omp_get_max_threads())
     {
-#pragma omp for private(r0, z0)
+#pragma omp for private(r0, z0) schedule(dynmaic)
         for (int i = 0; i < N; ++i) {
             r0 = r0_both(i);
             z0 = z0_both(i);
