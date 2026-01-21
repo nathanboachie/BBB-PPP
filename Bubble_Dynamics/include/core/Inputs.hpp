@@ -113,9 +113,9 @@ class Input {
             ConfigFileParser parser(input_conf);
             parser.PrintConfigFile();
 
-            do{
-                std::cout << '\n' << "Press a key to continue...";
-            } while (std::cin.get() != '\n');
+            //do{
+            //    std::cout << '\n' << "Press a key to continue...";
+            //} while (std::cin.get() != '\n');
 
             //Simulation parameters
             Nb = parser.GetConfigValueFromList<int>("Bubble data", "Nb", 50 );

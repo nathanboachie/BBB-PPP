@@ -1,0 +1,8 @@
+rm -r build
+mkdir build
+cd build
+cmake -DBUILD_OPENMP=1 -DBUILD_DOXYGEN=0 ../
+#make install       # optional -> install the solver as a library (note that special permission may be needed for installation)
+make solver
+#make doxydoc       # optional -> write the doxygen documentation
+

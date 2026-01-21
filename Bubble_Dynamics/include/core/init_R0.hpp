@@ -67,7 +67,11 @@ inline double set_R0(double epsilon, double k) {
     int max_iter = 100;
     double R_init;
     double x_low = 0.0;
-    double x_high = 0.8;
+    double x_high = 0.999;
+    if (epsilon <= 1.0){
+        x_high = 1.0;
+    }
+        
 
     const gsl_root_fsolver_type *T;
     gsl_root_fsolver *s;

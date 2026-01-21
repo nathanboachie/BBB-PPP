@@ -1,2 +1,25 @@
+
+# Build Stuff
+build/
+*/build/
+
+# Compiled stuff
+*.o
+*.so
+*.a
+*.out
+
+# Python stuff
+__pycache__/
+*.pyc
+
+# jupyter 
+.ipynb_checkpoints/
+
+# Simulation outputs
+*.mp4
+*.txt 
+
+# OS
 .DS_Store
 .idea/
