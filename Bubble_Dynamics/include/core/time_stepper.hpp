@@ -45,7 +45,7 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
     //nbeb PULSE STUFF
 		// nk2b 22/01/26
     double epsi_act, shock_pos, shock_speed;
-    shock_pos = - data.gamma - 1e-8;
+    shock_pos = -(1e-8); // nk2b 22/01/26 Just slightly below fluid-fluid interface
     shock_speed = 0; // c0*sqrt(rho*epsi/pg0)
 
     // ---------- Heun's method, 2 stages ----------
