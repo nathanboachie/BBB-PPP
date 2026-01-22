@@ -89,8 +89,8 @@ void Case_RayleighPlessetBubble::initialize() {
     const double pi = 3.14159265358979323846264338328;
 		// nk2b 22/01/26
 		// nk2b HARDCODE
-		readInitialArray(r_nodes,"/home/exy214/Documents/cavitation/code/bbb-dir/BIMBAMBUM/SIMS/rInitial.txt",Nb);
-		readInitialArray(z_nodes,"/home/exy214/Documents/cavitation/code/bbb-dir/BIMBAMBUM/SIMS/zInitial.txt",Nb);
+		readInitialArray(r_nodes,"/home/exy214/Documents/cavitation/code/bbb-dir/BIMBAMBUM/SIMS/PerturbRayleigh1P0/rInitial.txt",Nb);
+		readInitialArray(z_nodes,"/home/exy214/Documents/cavitation/code/bbb-dir/BIMBAMBUM/SIMS/PerturbRayleigh1P0/zInitial.txt",Nb);
     for (int i = 0; i < Nb + 1; ++i) {
         ur_nodes[i] = 0.0;
         uz_nodes[i] = 0.0;
