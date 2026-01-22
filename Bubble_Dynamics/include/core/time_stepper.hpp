@@ -38,22 +38,26 @@
 
 #include <algorithm>
 #include <cmath>
+#include <armadillo>
+#include <KH_IVP_solver.hpp>
+#include <iostream>
 
 template<typename BubbleData, typename BoundaryData, typename Inputs, typename BIM_solver>
 void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, BIM_solver &step) {
 
-    //nbeb PULSE STUFF
-    double epsi_act, shock_pos, shock_speed;
-    shock_pos = - data.gamma - 1.0;
-    shock_speed = 1650*pow(1000*data.epsilon/1e5, 0.5); // c0*sqrt(rho*epsi/pg0)
-
     // ---------- Heun's method, 2 stages ----------
     if (data.temporal_solver == "RK2") {
 
+        const double pi = 3.14159265358979323846264338328;
+        const int c_infty = 1500; // temp solution: speed of sound in water
+        const int rho_infty = 1000;
+        const int p_infty = 100000;
+        const double mach_b = sqrt(p_infty / rho_infty) / c_infty; // bubble-wall mach number
+
         double dt_b; // adaptive time step based on bubble dynamics
         double dt_s; // adaptive time step based on fluid-fluid interface dynamics
-        double dt; // adaptive time step considering both dynamics
-
+        double dt; // adaptive time step considering both dynamics   
+        
         // first stage
 
         boundary->boundary_endpoints_derivatives(); // computes the spatial derivatives
@@ -64,26 +68,46 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
         }
 
         bubble->V = bubble->compute_volume();
+        std::cout << "Volume:" << bubble->V << std::endl; // To monitor progress of simulation from terminal. Radius caps at approx 1.0
 
         step.compute_un(bubble, boundary, data);
-        step.compute_ut(bubble, boundary, data);
+        step.compute_ut(bubble, boundary, data);     
 
-        dt_b = bubble->time_step_bubble(data.epsilon, data.k);
+        dt_b = bubble->time_step_bubble(data.epsilon, data.k, data.delta_phi);
         dt_s = boundary->time_step_boundary();
         dt = fmin(dt_b, dt_s); // takes minimum between bubble and fluid-fluid interface time step
-        dt = fmax(dt, 1e-5); // impose a minimum time step value to avoid over-filtering
-        dt = fmin(dt, 1e-2); // impose a maximum time step value for stability
+        dt = fmax(dt, 0.00001); // impose a minimum time step value to avoid over-filtering
+        dt = fmin(dt, 0.01); // impose a maximum time step value for stability
         step.dt = dt;
 
+        if(step.time_step < 1) {
+            KH_IVP_solver ivp_solver(bubble->epsilon, bubble->k, mach_b, bubble->R0, 0.0); // generate backwards KH values
+            ivp_solver.solve(bubble->t1_vals, bubble->m1_vals, bubble->n_elem, dt);
+        }
+
+        // split m_vals into current and past vectors for delta m_dot calculation
+        std::vector<double> old_m1_vals = bubble->m1_vals;
+        std::vector<double> old_t1_vals = bubble->t1_vals;
+
+        // cycles through the values, replacing the old ones with the newly computed ones
+        bubble->m = bubble->compute_m(bubble->filter_un_b(step.un_b));
+        bubble->t1_vals.push_back(step.time);
+        bubble->m1_vals.push_back(bubble->m);
+
+        if (!bubble->t1_vals.empty() && !bubble->m1_vals.empty()) {
+            bubble->t1_vals.erase(bubble->t1_vals.begin());
+            bubble->m1_vals.erase(bubble->m1_vals.begin());
+        }
+
+        // compute the compressions terms for this and last step using polyfit applied to respective vectors
+        bubble->compr_term_old = -bubble->compute_m_dot(old_m1_vals, old_t1_vals) * mach_b / (4*pi);
+        bubble->compr_term = -bubble->compute_m_dot(bubble->m1_vals, bubble->t1_vals) * mach_b / (4 * pi);
+
         for (int i = 0; i < data.Nb + 1; ++i) {
-	    epsi_act = data.epsilon; //nbeb
-	    if (bubble->z_nodes[i] >= (shock_pos + step.time * shock_speed)){
-	        epsi_act = 1.0;
-	    } 
             bubble->dr1[i] = dt * bubble->ur_nodes[i];
             bubble->dz1[i] = dt * bubble->uz_nodes[i];
             bubble->dphi1[i] = dt * (1.0 + 0.5 * (bubble->u_nodes[i] * bubble->u_nodes[i]) -
-                                     epsi_act * pow(bubble->V0 / bubble->V, data.k) -
+                                     data.epsilon * pow(bubble->V0 / bubble->V, data.k) -
                                      data.zeta * (bubble->z_nodes[i] + data.gamma));
             bubble->r_nodes1[i] = bubble->r_nodes[i];
             bubble->z_nodes1[i] = bubble->z_nodes[i];
@@ -92,13 +116,14 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
             bubble->z_nodes[i] = bubble->z_nodes[i] + bubble->dz1[i];
             bubble->phi_nodes[i] = bubble->phi_nodes[i] + bubble->dphi1[i];
         }
+
         for (int i = 0; i < data.Ns + 1; ++i) {
 
             boundary->dr1[i] = dt * boundary->ur_nodes[i];
             boundary->dz1[i] = dt * boundary->uz_nodes[i];
             boundary->dF1[i] = dt * (boundary->u_vec_prod[i] - 0.5 * (boundary->u_nodes2[i] * boundary->u_nodes2[i] +
                                                                       data.alpha * boundary->u_nodes1[i] *
-                                                                      boundary->u_nodes1[i]) +
+                                                                      boundary->u_nodes1[i]) + 
                                      data.sigma_s * boundary->curv_nodes[i] -
                                      data.zeta * (1.0 - data.alpha) * boundary->z_nodes[i]);
             boundary->r_nodes1[i] = boundary->r_nodes[i];
@@ -108,7 +133,6 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
             boundary->z_nodes[i] = boundary->z_nodes[i] + boundary->dz1[i];
             boundary->F_nodes[i] = boundary->F_nodes[i] + boundary->dF1[i];
         }
-
 
         //Second stage
         boundary->boundary_endpoints_derivatives();
@@ -120,18 +144,15 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
         step.compute_ut(bubble, boundary, data);
 
         for (int i = 0; i < data.Nb + 1; ++i) {
-	    epsi_act = data.epsilon; //nbeb
-	    if (bubble->z_nodes[i] >= (shock_pos + step.time * shock_speed)){
-	        epsi_act = 1.0;
-	    } 
             bubble->dr2[i] = dt * bubble->ur_nodes[i];
             bubble->dz2[i] = dt * bubble->uz_nodes[i];
             bubble->dphi2[i] = dt * (1.0 + 0.5 * (bubble->u_nodes[i] * bubble->u_nodes[i]) -
-                                     epsi_act * pow(bubble->V0 / bubble->V, data.k) -
+                                     data.epsilon * pow(bubble->V0 / bubble->V, data.k) -
                                      data.zeta * (bubble->z_nodes[i] + data.gamma));
             bubble->r_nodes[i] = bubble->r_nodes1[i] + 0.5 * (bubble->dr1[i] + bubble->dr2[i]);
             bubble->z_nodes[i] = bubble->z_nodes1[i] + 0.5 * (bubble->dz1[i] + bubble->dz2[i]);
-            bubble->phi_nodes[i] = bubble->phi_nodes1[i] + 0.5 * (bubble->dphi1[i] + bubble->dphi2[i]);
+            bubble->phi_nodes[i] = bubble->phi_nodes1[i] + 0.5 * (bubble->dphi1[i] + bubble->dphi2[i])
+                                    -(bubble->compr_term_old-bubble->compr_term); // compressibility term according to first-order proof-of-concept
         }
 
         for (int i = 0; i < data.Ns + 1; ++i) {
@@ -151,11 +172,17 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
 
         // ---------- Euler's method, 1stage ----------
     else if (data.temporal_solver == "RK1") {
+        
+        const double pi = 3.14159265358979323846264338328;
+        const int c_infty = 1500; // temp solution: speed of sound in water
+        const int rho_infty = 1000;
+        const int p_infty = 100000;
+        const double mach_b = sqrt(p_infty / rho_infty) / c_infty; // bubble-wall mach number
 
         double dt_b;
         double dt_s;
         double dt;
-
+            
         // first stage
         boundary->boundary_endpoints_derivatives(); // computes the spatial derivatives
         // at the fluid-fluid interface endpoints
@@ -168,28 +195,48 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
         step.compute_un(bubble, boundary, data);
         step.compute_ut(bubble, boundary, data);
 
-        dt_b = bubble->time_step_bubble(data.epsilon, data.k);
+        dt_b = bubble->time_step_bubble(data.epsilon, data.k, data.delta_phi);
         dt_s = boundary->time_step_boundary();
         dt = fmin(dt_b, dt_s); // takes minimum between bubble and fluid-fluid interface time step
-        dt = fmax(dt, 1e-5); // impose a minimum time step value to avoid over-filtering
-        dt = fmin(dt, 1e-2); // impose a maximum time step value for stability
+        dt = fmax(dt, 0.00001); // impose a minimum time step value to avoid over-filtering
+        dt = fmin(dt, 0.01); // impose a maximum time step value for stability
         step.dt = dt;
+        
+        if(step.time_step <1) {
+            KH_IVP_solver ivp_solver(bubble->epsilon, bubble->k, mach_b, bubble->R0, 0.0);
+            ivp_solver.solve(bubble->t1_vals, bubble->m1_vals, bubble->n_elem, dt);
+            std::cout << "initial time and m vector values -----------------" << std::endl;
+        }
 
-	//std::cout << "shockpos = " << shock_pos + step.time*shock_speed << std::endl;
-	//std::cout << "shockspeed = " << shock_speed << std::endl;
+        // split m_vals into current and past vectors for delta m_dot calculation
+        std::vector<double> old_m1_vals = bubble->m1_vals;
+        std::vector<double> old_t1_vals = bubble->t1_vals;
+
+        // cycles through the values, replacing the old ones with the newly computed ones
+        bubble->m = bubble->compute_m(step.un_b);
+        bubble->t1_vals.push_back(step.time);
+        bubble->m1_vals.push_back(bubble->m);
+
+        if (!bubble->t1_vals.empty() && !bubble->m1_vals.empty()) {
+            bubble->t1_vals.erase(bubble->t1_vals.begin());
+            bubble->m1_vals.erase(bubble->m1_vals.begin());
+        }
+        
+        // compute the compressions terms for this and last step using polyfit applied to respective vectors        
+        bubble->compr_term_old = -bubble->compute_m_dot(old_m1_vals, old_t1_vals) * mach_b / (4*pi);
+        bubble->compr_term = -bubble->compute_m_dot(bubble->m1_vals, bubble->t1_vals) * mach_b / (4 * pi);
+
+
         for (int i = 0; i < data.Nb + 1; ++i) {
-	    epsi_act = data.epsilon; //nbeb
-	    if (bubble->z_nodes[i] >= (shock_pos + step.time * shock_speed)){
-	        epsi_act = 1.0;
-	    } 
             bubble->dr1[i] = dt * bubble->ur_nodes[i];
             bubble->dz1[i] = dt * bubble->uz_nodes[i];
             bubble->dphi1[i] = dt * (1.0 + 0.5 * (bubble->u_nodes[i] * bubble->u_nodes[i]) -
-                                     epsi_act * pow(bubble->V0 / bubble->V, data.k) -
+                                     data.epsilon * pow(bubble->V0 / bubble->V, data.k) -
                                      data.zeta * (bubble->z_nodes[i] + data.gamma));
             bubble->r_nodes[i] = bubble->r_nodes[i] + bubble->dr1[i];
             bubble->z_nodes[i] = bubble->z_nodes[i] + bubble->dz1[i];
-            bubble->phi_nodes[i] = bubble->phi_nodes[i] + bubble->dphi1[i];
+            bubble->phi_nodes[i] = bubble->phi_nodes[i] + bubble->dphi1[i]
+                                    -(bubble->compr_term_old-bubble->compr_term); // compressibility term according to first-order proof-of-concept
         }
         for (int i = 0; i < data.Ns + 1; ++i) {
             boundary->dr1[i] = dt * boundary->ur_nodes[i];
@@ -212,3 +259,4 @@ void time_integration(BubbleData &bubble, BoundaryData &boundary, Inputs &data, 
 };
 
 #endif // TIME_STEPPER_HPP
+
